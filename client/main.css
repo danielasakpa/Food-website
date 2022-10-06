@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@200;400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nuosu+SIL&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+:root {
+    --font-family: "Inter", sans-serif;
+    --color-bg: #FAF0E6;
+    --color-Salmon: #E48C71;
+    --color-white: #FFFFFF;
+    --color-Rose: #F1D4CA;
+    --color-black: #000000;
+  }
+ 
+  .slide-right {
+	-webkit-animation: slide-right 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-right 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-right {
+    0% {
+      -webkit-transform: translateX(-100px);
+              transform: translateX(-100px);
+    }
+    100% {
+      -webkit-transform: translateX(1px);
+              transform: translateX(1px);
+    }
+  }
+  @keyframes slide-right {
+    0% {
+      -webkit-transform: translateX(-100px);
+              transform: translateX(-100px);
+    }
+    100% {
+      -webkit-transform: translateX(1px);
+              transform: translateX(1px);
+    }
+  }
+  
+  .slide-left {
+	-webkit-animation: slide-left 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-left 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-left {
+    0% {
+      -webkit-transform: translateX(100px);
+              transform: translateX(100px);
+    }
+    100% {
+      -webkit-transform: translateX(-1px);
+              transform: translateX(-1px);
+    }
+  }
+  @keyframes slide-left {
+    0% {
+      -webkit-transform: translateX(100px);
+              transform: translateX(100px);
+    }
+    100% {
+      -webkit-transform: translateX(-1px);
+              transform: translateX(-1px);
+    }
+  }
+  
+  .scale-up-center {
+    animation: scale-up-center 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  }
+  
+  @keyframes scale-up-center{0%{transform:scale(.5)}100%{transform:scale(1)}}
+  
