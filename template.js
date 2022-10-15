@@ -9,10 +9,10 @@ export default ({ markup, css }) => {
         >
         <title>MERN Skeleton</title>
         ${css}
+        <link href="https://www.dafontfree.net/embed/cHJhZ21hdGljYS1leHRyYWJvbGQmZGF0YS80Ni9wLzYyODM3L3ByZzg1Lm90Zg" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="./dist/main.css">
-        <link rel="stylesheet" href="bower_components/aos/dist/aos.css" />
         <style>
             a{
               text-decoration: none;
@@ -23,7 +23,6 @@ export default ({ markup, css }) => {
       <body style="margin:0">
         <div id="root">${markup}</div>
         <script type="text/javascript" src="/dist/bundle.js"></script>
-        <script src="bower_components/aos/dist/aos.js"></script> 
       </body>
     </html>`;
 };

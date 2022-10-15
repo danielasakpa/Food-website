@@ -1,13 +1,7 @@
-import React, { useState } from "react";
-import "./Navbar.css"
-import {
-  Typography,
-  Stack,
-  Box,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material";
-import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
+import React from "react";
+import useStyles from "./NavbarStyle.js";
+import { Stack, Box, createTheme, ThemeProvider } from "@mui/material";
+import auth from "../../auth/auth-helper";
 
 const theme = createTheme({
   components: {
@@ -40,97 +34,55 @@ theme.typography.h6 = {
   },
 };
 
-const Navbar = () => {
-  const [toggleMenu, setToggleMenu] = useState(false);
+const navLinks = [
+  { link: "/ourmenu", name: "Our Menu" },
+  { link: "/aboutus", name: "About Us" },
+  { link: "/contact", name: "Contact" },
+];
 
+const Navbar = ({ color, fontFamily, moblieDisplay }) => {
+  const jwt = auth.isAuthenticated();
+  const classes = useStyles();
   return (
     <>
-    <ThemeProvider theme={theme}>
-      <nav>
+      <ThemeProvider theme={theme}>
         <Stack
           direction="row"
-          justifyContent="space-between"
+          justifyContent="start"
           alignItems="center"
-          height="100%"
+          mb={{ sm: 2, md: 10 }}
+          display={{ xs: moblieDisplay, md: "block" }}
         >
-          <Typography
-            variant="h6"
-            textAlign="center"
-            border="2px solid black"
-            borderRadius={1}
-          >
-            Jesus Embassy
-          </Typography>
-          <div className="nav-links">
-            <a href="/#">
-              <li>Our menu</li>
-            </a>
-            <a href="/#">
-              <li>About Us</li>
-            </a>
-            <a href="/#">
-              <li>Contact</li>
-            </a>
-            <a href="/#">
-              <li>Jobs</li>
-            </a>
-            <a href="/#">
+          <Box fontFamily={fontFamily} className={classes.navLinks}>
+            {navLinks.map((items) => {
+              return (
+                <a
+                  key={items.name}
+                  style={{
+                    color: color,
+                    fontFamily: fontFamily,
+                    fontWeight: "200",
+                  }}
+                  href={items.link}
+                >
+                  <li>{items.name}</li>
+                </a>
+              );
+            })}
+            <a
+              style={{
+                color: color,
+                fontFamily: fontFamily,
+                fontWeight: "200",
+              }}
+              href={jwt.token ? "/" : "/signup"}
+            >
               <li>Order Now</li>
             </a>
-          </div>
-          <Stack
-            sx={{ display: { md: "none", xs: "block" } }}
-            className="navbar-menu"
-          >
-            {toggleMenu ? (
-              <Box
-                border="2px solid black"
-                padding="5px 10px"
-                borderRadius={1}
-              >
-                <RiCloseLine
-                  color="#000000"
-                  size={30}
-                  onClick={() => setToggleMenu(false)}
-                />
-              </Box>
-            ) : (
-              <Box
-                border="2px solid black"
-                backgroundColor="#F1D4CA"
-                padding="5px 10px"
-                borderRadius={1}
-              >
-                <RiMenu3Line
-                  color="#000000"
-                  size={30}
-                  onClick={() => setToggleMenu(true)}
-                />
-              </Box>
-            )}
-            {toggleMenu && (
-              <div className="navbar-menu_container scale-up-center">
-                <div className="navbar-menu_container-links">
-                  <p>
-                    <a href="menu">Our Menu</a>
-                  </p>
-                  <p>
-                    <a href="about">About Us</a>
-                  </p>
-                  <p>
-                    <a href="contact">Contact</a>
-                  </p>
-                  <p>
-                    <a href="jobs">Jobs</a>
-                  </p>
-                </div>
-              </div>
-            )}
-          </Stack>
+          </Box>
         </Stack>
-      </nav>
-    </ThemeProvider>
-  </>
+      </ThemeProvider>
+    </>
   );
 };
 

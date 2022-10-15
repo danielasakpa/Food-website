@@ -12,9 +12,6 @@ const config = {
     "webpack-hot-middleware/client?reload=true",
     path.join(CURRENT_WORKING_DIR, "client/main.js"),
   ],
-  externals: {
-    react: "React",
-  },
   output: {
     path: path.join(CURRENT_WORKING_DIR, "/dist"),
     filename: "bundle.js",
@@ -40,9 +37,6 @@ const config = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.ProvidePlugin({
-      React: "react",
-    }),
     new MiniCssExtractPlugin()
   ],
   resolve: {

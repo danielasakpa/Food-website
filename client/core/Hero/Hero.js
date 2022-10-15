@@ -1,13 +1,18 @@
 import React from "react";
-import "./Hero.css";
+import useStyles from "./HeroStyle.js";
 import {
+  Box,
+  Container,
+  Grid,
   Typography,
-  Stack,
   createTheme,
   ThemeProvider,
   Button,
 } from "@mui/material";
-import HeroPhoto from "../../Assets/images/Hero.jpg";
+import SignupImg from "../../Assets/images/hero.jpg";
+import Navbar from "../Navbar/Navbar";
+import { Stack } from "@mui/system";
+import NavMenu from "../Navbar/NavMenu";
 
 const theme = createTheme({
   components: {
@@ -19,16 +24,17 @@ const theme = createTheme({
           },
           style: {
             maxWidth: "max-content",
+            fontFamily: "Bebas Neue",
             padding: "15px 30px",
             fontWeight: "400",
-            backgroundColor: "#F1D4CA",
+            backgroundColor: "black",
             boxShadow: "none",
-            color: "black",
+            color: "#ffffff",
             marginTop: "35px",
             border: "2px solid black",
             "&:hover": {
-              backgroundColor: "#000000",
-              color: "#FFFFFF",
+              backgroundColor: "#F1D4CA",
+              color: "black",
             },
           },
         },
@@ -47,34 +53,33 @@ const theme = createTheme({
 });
 
 theme.typography.h3 = {
-  color: "#E48C71",
-  fontSize: "1.2rem",
+  color: "#fffee6",
+  fontFamily: "Averia Serif Libre",
+  fontSize: "3.2rem",
   "@media (max-width:599px)": {
     fontSize: "1.3rem",
-  },
-  [theme.breakpoints.up("sm")]: {
-    fontSize: "1.8rem",
   },
 };
 
 theme.typography.h2 = {
-  fontSize: "1.2rem",
+  fontSize: "2rem",
+  fontFamily: "Bebas Neue",
+  marginBottom: 2,
   paddingTop: "6px",
-  fontFamily: "Nuosu SIL",
+  color: "#fffee6",
   lineHeight: 1.2,
   "@media (max-width:599px)": {
     fontSize: "3rem",
-  },
-  [theme.breakpoints.up("sm")]: {
-    fontSize: "4rem",
   },
 };
 
 theme.typography.body1 = {
   fontSize: "1.2rem",
+  fontFamily: "Bebas Neue",
   paddingTop: "10px",
+  color: "#fffee6",
   "@media (max-width:599px)": {
-    fontSize: "0.95rem",
+    fontSize: "0.75rem",
   },
   [theme.breakpoints.up("sm")]: {
     fontSize: "1.1rem",
@@ -82,36 +87,69 @@ theme.typography.body1 = {
 };
 
 const Hero = () => {
+  const classes = useStyles();
   return (
     <>
-      <Stack
-        direction={{ xs: "column", lg: "row" }}
-        marginTop={{ xs: 8, sm: 12 }}
-        justify-content="space-between"
+      <Box
+        sx={{
+          backgroundImage: `url(${SignupImg})`,
+          height: "90vh",
+          backgroundRepeat: "no-repeat",
+          backgroundColor: (t) =>
+            t.palette.mode === "light"
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        position="relative"
       >
-        <ThemeProvider theme={theme}>
-          <Stack marginTop={{ xs: 0, md: 2 }} className="slide-right">
-            <Typography variant="h3">JESUS EMBASSY EATERY</Typography>
-            <Typography variant="h2">
-              WE SPEAK THE GOOD FOOD LANGUAGE
-            </Typography>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse varius enim in eros elementum tristique. Duis cursus,
-              mi quis viverra ornare, eros dolor interdum nulla.
-            </Typography>
-            <Button variant="contained">Discover Our Menu</Button>
+        <NavMenu />
+        <Container maxWidth="xl">
+          <Stack
+            direction="row"
+            alignItems="end"
+            justifyContent="space-between"
+            pb={3}
+            height="90vh"
+          >
+            <ThemeProvider theme={theme}>
+              <Box marginTop={{ xs: 0, md: 2 }} className={classes.slidRight}>
+                <Navbar color="#fffee6" moblieDisplay="none" fontFamily="Averia Serif Libre"/>
+                <Typography
+                  variant="h2"
+                  fontFamily={{ xs: "Averia Serif Libre", lg: "Bebas Neue" }}
+                  lineHeight="1"
+                  display={{ xs: "block", md: "none" }}
+                >
+                  WE SPEAK THE GOOD FOOD LANGUAGE
+                </Typography>
+                <Typography variant="body1">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse varius enim in eros elementum tristique. Duis
+                  cursus, mi quis viverra ornare, eros dolor interdum nulla.
+                </Typography>
+                <Button variant="contained">Discover Our Menu</Button>
+              </Box>
+              <Box
+                textAlign="right"
+                display={{ xs: "none", md: "block" }}
+                className={classes.slideLeft}
+              >
+                <Typography variant="h3" marginBottom={29}>
+                  WE SPEAK THE GOOD FOOD LANGUAGE
+                </Typography>
+                <Box display="flex" flexDirection="row" justifyContent="end">
+                  <Typography variant="body1" mr={4}>
+                    JESUS EMBASSY
+                  </Typography>
+                  <Typography variant="body1">@ 2022</Typography>
+                </Box>
+              </Box>
+            </ThemeProvider>
           </Stack>
-          <Stack className="slide-left">
-            <img
-              src={HeroPhoto}
-              loading="lazy"
-              alt="HeroImg"
-              className="HeroImg"
-            />
-          </Stack>
-        </ThemeProvider>
-      </Stack>
+        </Container>
+      </Box>
     </>
   );
 };

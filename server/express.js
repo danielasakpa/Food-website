@@ -41,13 +41,13 @@ app.use(helmet());
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
 
-app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
+// app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
 
 // mount routes
 app.use("/", userRoutes);
 app.use("/", authRoutes);
 
-function handleRender(req, res) {
+app.get("*", (req, res) => {
   const cache = createEmotionCache();
   const context = {};
   const { extractCriticalToChunks, constructStyleTagsFromChunks } =
@@ -55,13 +55,13 @@ function handleRender(req, res) {
 
   // Render the component to a string.
   const html = ReactDOMServer.renderToString(
-      <StaticRouter location={req.url} context={context}>
-        <CacheProvider value={cache}>
-          <ThemeProvider theme={theme}>
-            <MainRouter />
-          </ThemeProvider>
-        </CacheProvider>
-      </StaticRouter>
+    <StaticRouter location={req.url} context={context}>
+      <CacheProvider value={cache}>
+        <ThemeProvider theme={theme}>
+          <MainRouter />
+        </ThemeProvider>
+      </CacheProvider>
+    </StaticRouter>
   );
 
   if (context.url) {
@@ -78,10 +78,7 @@ function handleRender(req, res) {
       css: emotionCss,
     })
   );
-}
-
-// This is fired every time the server-side receives a request.
-app.use(handleRender);
+});
 
 // Catch unauthorised errors
 app.use((err, req, res, next) => {

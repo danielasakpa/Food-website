@@ -8,7 +8,7 @@ const signin = async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     if (!user) return res.status("401").json({ error: "User not found" });
     console.log("yes", await user.authenticate(req.body.password))
-    if ( await !user.authenticate(req.body.password)) {
+    if (( await user.authenticate(req.body.password)) === false) {
       return res.status("401").send({
         error: "Email and password don't match.",
       });

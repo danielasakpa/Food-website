@@ -1,50 +1,82 @@
 import React, { useState } from "react";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import Icon from "@material-ui/core/Icon";
-import { makeStyles } from "@material-ui/core/styles";
-import auth from "./../auth/auth-helper";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import ErrorIcon from "@mui/icons-material/Error";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import SignupImg from "../Assets/images/signup.jpg";
+import auth from "./auth-helper";
 import { Redirect } from "react-router-dom";
 import { signin } from "./api-auth.js";
+import { Link } from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
-  card: {
-    maxWidth: 600,
-    margin: "auto",
-    textAlign: "center",
-    marginTop: theme.spacing(5),
-    paddingBottom: theme.spacing(2),
-  },
-  error: {
-    verticalAlign: "middle",
-  },
-  title: {
-    marginTop: theme.spacing(2),
-    color: theme.palette.openTitle,
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 300,
-  },
-  submit: {
-    margin: "auto",
-    marginBottom: theme.spacing(2),
-  },
-}));
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <a color="inherit" href="https://mui.com/">
+        Jesus Embassy
+      </a>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
-export default function Signin(props) {
-  const classes = useStyles();
+const theme = createTheme({
+  components: {
+    MuiButton: {
+      variants: [
+        {
+          props: {
+            variant: "contained",
+          },
+          style: {
+            fontWeight: "400",
+            backgroundColor: "#faf0e6",
+            boxShadow: "none",
+            color: "black",
+            marginTop: "35px",
+            border: "2px solid black",
+            "&:hover": {
+              backgroundColor: "#000000",
+              color: "#FFFFFF",
+            },
+          },
+        },
+      ],
+    },
+  },
+});
+
+const SignIn = (props) => {
+  const jwt = auth.isAuthenticated();
   const [values, setValues] = useState({
     email: "",
     password: "",
     error: "",
     redirectToReferrer: false,
   });
+  const [userId, setUserID] = useState("");
+
+  const handleChange = (name) => (event) => {
+    setValues({ ...values, [name]: event.target.value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
 
   const clickSubmit = () => {
     const user = {
@@ -56,6 +88,7 @@ export default function Signin(props) {
       if (data && data.error) {
         setValues({ ...values, error: data.error });
       } else {
+        setUserID(data.user._id);
         auth.authenticate(data, () => {
           setValues({ ...values, error: "", redirectToReferrer: true });
         });
@@ -63,65 +96,111 @@ export default function Signin(props) {
     });
   };
 
-  const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value });
-  };
-
   const { from } = (props.location && props.location.state) || {
     from: {
-      pathname: "/",
+      pathname: `/user/${userId}`,
     },
   };
   const { redirectToReferrer } = values;
   if (redirectToReferrer) {
-    return <Redirect  to={from} />;
+    return <Redirect to={from} />;
+  }
+
+  if (jwt.token) {
+    return <Redirect to="/" />;
   }
 
   return (
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography variant="h6" className={classes.title}>
-          Sign In
-        </Typography>
-        <TextField
-          id="email"
-          type="email"
-          label="Email"
-          className={classes.textField}
-          value={values.email}
-          onChange={handleChange("email")}
-          margin="normal"
+    <ThemeProvider theme={theme}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: `url(${SignupImg})`,
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         />
-        <br />
-        <TextField
-          id="password"
-          type="password"
-          label="Password"
-          className={classes.textField}
-          value={values.password}
-          onChange={handleChange("password")}
-          margin="normal"
-        />
-        <br />{" "}
-        {values.error && (
-          <Typography component="p" color="error">
-            <Icon color="error" className={classes.error}>
-              error
-            </Icon>
-            {values.error}
-          </Typography>
-        )}
-      </CardContent>
-      <CardActions>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={clickSubmit}
-          className={classes.submit}
-        >
-          Submit
-        </Button>
-      </CardActions>
-    </Card>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "black" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign In
+            </Typography>
+            <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                fullWidth
+                value={values.email}
+                onChange={handleChange("email")}
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                value={values.password}
+                onChange={handleChange("password")}
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <br />{" "}
+              {values.error && (
+                <Typography component="p" color="error">
+                  <ErrorIcon />
+                  {values.error}
+                </Typography>
+              )}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                onClick={clickSubmit}
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <a href="#" variant="body2">
+                    Forgot password?
+                  </a>
+                </Grid>
+                <Grid item>
+                  <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
+                </Grid>
+              </Grid>
+              <Copyright sx={{ mt: 5 }} />
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
-}
+};
+
+export default SignIn;

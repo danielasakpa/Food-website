@@ -1,10 +1,10 @@
+import { hot } from "react-hot-loader";
 import React from "react";
 import "./App.css"
 import MainRouter from "./MainRouter";
 import { BrowserRouter } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme";
-import { hot } from "react-hot-loader";
 
 const App = () => {
   React.useEffect(() => {
