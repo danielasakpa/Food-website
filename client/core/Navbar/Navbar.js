@@ -35,7 +35,7 @@ theme.typography.h6 = {
 };
 
 const navLinks = [
-  { link: "/ourmenu", name: "Our Menu" },
+  { link: "/menu", name: "Our Menu" },
   { link: "/aboutus", name: "About Us" },
   { link: "/contact", name: "Contact" },
 ];
