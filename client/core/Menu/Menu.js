@@ -73,7 +73,7 @@ const Menu = () => {
                   component="img"
                   sx={{
                     // 16:9
-                    pt: "56.25%",
+                    pt: "56.25%"
                   }}
                   image={Meal}
                   alt="random"
