@@ -1,7 +1,9 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const config = {
- env: process.env.NODE_ENV || 'development',
- port: process.env.PORT || 3000,
+ port: process.env.PORT || 5000,
  jwtSecret: process.env.JWT_SECRET || "ogfundz304",
- mongoUri: "mongodb+srv://oba-codes:ogfundz304@blogcluster.rk7lv.mongodb.net/Backend?retryWrites=true&w=majority"
+ mongoUri: process.env.CONNECT_URL
 }
-export default config
+module.exports = config;

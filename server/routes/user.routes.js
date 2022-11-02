@@ -1,6 +1,6 @@
-import express from "express";
-import userCtrl from "../controllers/user_controller";
-import authCtrl from "../controllers/auth.controller";
+const express = require("express");
+const userCtrl = require("../controllers/user_controller");
+const authCtrl = require("../controllers/auth.controller");
 
 const router = express.Router();
 
@@ -13,4 +13,4 @@ router
   .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove);
 
 router.param("userId", userCtrl.userByID);
-export default router;
+module.exports = router;

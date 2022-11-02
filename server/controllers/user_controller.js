@@ -1,8 +1,9 @@
-import User from "../models/user.model";
-import extend from "lodash/extend";
-import errorHandler from "../helpers/dbErrorHandler";
-import asyncHandler from "express-async-handler";
-import bcrypt from "bcryptjs";
+const User = require("../models/user.model");
+const extend = require("lodash/extend");
+const errorHandler = require("../helpers/dbErrorHandler");
+const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
+
 
 const passwordValidation = (password, res) => {
   if (password.length < 6) {
@@ -130,4 +131,4 @@ const remove = async (req, res) => {
   }
 };
 
-export default { create, userByID, read, list, remove, update };
+module.exports = { create, userByID, read, list, remove, update };
