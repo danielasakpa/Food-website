@@ -78,7 +78,7 @@ const Profile = withRouter(({ match, history }) => {
   return (
     <>
       <Container maxWidth="xl">
-        <UserNav userId={user._id}/>
+        <UserNav/>
         <Box>
           <Stack
             marginTop={10}

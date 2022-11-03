@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -8,20 +8,19 @@ import { CartContext } from "../../CartContext";
 import { Typography } from "@mui/material";
 import CartProduct from "../CartProduct/CartProduct";
 import { Stack } from "@mui/system";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import PaystackBtn from "../PaystackBtn/PaystackBtn";
 
 const Cart = () => {
   const cart = useContext(CartContext);
+  const [state, setState] = React.useState({
+    right: false,
+  });
 
   const productsCount = cart.items.reduce(
     (sum, product) => sum + product.quantity,
     0
   );
-
-  const [state, setState] = React.useState({
-    right: false,
-  });
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -37,14 +36,14 @@ const Cart = () => {
   const CartDrawer = (anchor) => (
     <Box
       sx={{
-        width: {md: "500px"},
+        width: { md: "500px" },
         padding: "20px",
       }}
       role="presentation"
     >
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="h5">Your Cart:</Typography>
-        <CloseIcon cursor="pointer" onClick={toggleDrawer(anchor, false)}/>
+        <CloseIcon cursor="pointer" onClick={toggleDrawer(anchor, false)} />
       </Stack>
       {productsCount > 0 ? (
         <>
@@ -57,8 +56,8 @@ const Cart = () => {
           ))}
 
           <h1>Total: {cart.getTotalCost().toFixed(0)}</h1>
-          
-          <PaystackBtn amount={cart.getTotalCost().toFixed(0)}/>
+
+          <PaystackBtn amount={cart.getTotalCost().toFixed(0)} />
         </>
       ) : (
         <p>There are no items in your cart!</p>

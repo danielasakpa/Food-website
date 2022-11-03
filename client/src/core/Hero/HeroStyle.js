@@ -1,6 +1,13 @@
 import { makeStyles } from "@mui/styles";
 
 export default makeStyles((theme) => ({
+  orderBtn: {
+    color: "#ffffff",
+    textDecoration: "none",
+    "&:hover": {
+      color: "#000000",
+    },
+  },
   slideLeft: {
     animation: "$slide-left 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
   },

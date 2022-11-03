@@ -15,7 +15,6 @@ import { Button } from "@mui/material";
 const ProductCard = ({ products }) => {
   const cart = useContext(CartContext);
   const productQuantity = cart.getProductQuantity(products.id);
-  console.log(cart.items);
 
   return (
     <Grid data-aos="fade-up" item key={products.id} xs={12} sm={6} md={3}>

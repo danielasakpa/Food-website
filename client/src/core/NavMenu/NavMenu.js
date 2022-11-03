@@ -12,12 +12,16 @@ import ListItemText from "@mui/material/ListItemText";
 
 const drawerWidth = 240;
 const navItems = [
-  { link: "/menu", name: "Menu" },
+  { link: "/menu", name: "Our Menu" },
   { link: "/about", name: "About Us" },
   { link: "/contact", name: "Contact Us" },
 ];
 
-const NavMenu = (props) => {
+const isActive = (history, path) => {
+  if (history.location.pathname == path) return { color: "#ff4081" };
+};
+
+const NavMenu = withRouter((props) => {
   const jwt = auth.isAuthenticated();
   const classes = useStyles();
   const { window } = props;
@@ -29,18 +33,22 @@ const NavMenu = (props) => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        JESUS EMBASSY
-      </Typography>
+      <Link to={"/"} style={{ color: "#000000", textDecoration: "none" }}>
+        <Typography variant="h6" sx={{ my: 2 }}>
+          JESUS EMBASSY
+        </Typography>
+      </Link>
       <Divider />
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText>
-                <a className={classes.navMenuLink} href={item.link}>
-                  {item.name}
-                </a>
+                <Link className={classes.navMenuLink} to={item.link}>
+                  <Typography style={isActive(props.history, item.link)}>
+                    {item.name}
+                  </Typography>
+                </Link>
               </ListItemText>
             </ListItemButton>
           </ListItem>
@@ -48,12 +56,12 @@ const NavMenu = (props) => {
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             <ListItemText>
-              <a
+              <Link
                 className={classes.navMenuLink}
-                href={jwt.token ? "/" : "/signup"}
+                to={jwt.token ? "/" : "/signup"}
               >
                 Order Now
-              </a>
+              </Link>
             </ListItemText>
           </ListItemButton>
         </ListItem>
@@ -113,7 +121,7 @@ const NavMenu = (props) => {
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: "block", sm: "none" },
+          display: { xs: "block", md: "none" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
@@ -124,6 +132,6 @@ const NavMenu = (props) => {
       </Drawer>
     </Box>
   );
-};
+});
 
 export default NavMenu;

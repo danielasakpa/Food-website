@@ -17,6 +17,7 @@ const signin = async (user) => {
 
 const signout = async () => {
   try {
+    sessionStorage.clear("user")
     let response = await fetch("/auth/signout/", { method: "GET" });
     return await response.json();
   } catch (err) {

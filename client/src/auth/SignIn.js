@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -94,6 +94,7 @@ const SignIn = (props) => {
         setValues({ ...values, error: data.error, isLoading: false });
       } else {
         setUserID(data.user._id);
+        sessionStorage.setItem("user", JSON.stringify(user))
         auth.authenticate(data, () => {
           setValues({ ...values, error: "", redirectToReferrer: true, isLoading: false });
         });

@@ -2,6 +2,7 @@ import React from "react";
 import useStyles from "./NavbarStyle.js";
 import { Stack, Box, createTheme, ThemeProvider } from "@mui/material";
 import auth from "../../auth/auth-helper";
+import { Link } from "react-router-dom";
 
 const theme = createTheme({
   components: {
@@ -47,38 +48,39 @@ const Navbar = ({ color, fontFamily, moblieDisplay }) => {
     <>
       <ThemeProvider theme={theme}>
         <Stack
+          width="250px"
           direction="row"
           justifyContent="start"
           alignItems="center"
           mb={{ sm: 2, md: 10 }}
           display={{ xs: moblieDisplay, md: "block" }}
         >
-          <Box fontFamily={fontFamily} className={classes.navLinks}>
+          <Box fontFamily={fontFamily}>
             {navLinks.map((items) => {
               return (
-                <a
+                <Link
+                  className={classes.navLinks}
                   key={items.name}
                   style={{
-                    color: color,
                     fontFamily: fontFamily,
                     fontWeight: "200",
                   }}
-                  href={items.link}
+                  to={items.link}
                 >
                   <li>{items.name}</li>
-                </a>
+                </Link>
               );
             })}
-            <a
+            <Link
+              className={classes.navLinks}
               style={{
-                color: color,
                 fontFamily: fontFamily,
                 fontWeight: "200",
               }}
               href={jwt.token ? "/" : "/signup"}
             >
               <li>Order Now</li>
-            </a>
+            </Link>
           </Box>
         </Stack>
       </ThemeProvider>

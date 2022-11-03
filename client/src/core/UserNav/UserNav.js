@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import useStyles from "./UserNavStyle";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
@@ -13,8 +13,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { Link, withRouter } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import Cart from "../Cart/Cart";
+import auth from "../../auth/auth-helper";
 
 const theme = createTheme({
   components: {
@@ -31,15 +33,21 @@ const theme = createTheme({
   },
 });
 
-function DrawerAppBar(props) {
+const isActive = (history, path) => {
+  if (history.location.pathname == path) return { color: "#ff4081" };
+};
+
+const UserNav = withRouter((props) => {
+  const userData = JSON.parse(sessionStorage.getItem("user"));
+
   const classes = useStyles();
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const drawerWidth = 240;
   const navItems = [
-    { link: `/user/${props.userId}`, name: "Profile" },
-    { link: "/menu", name: "Menu" },
+    { link: "/menu", name: "Our menu" },
     { link: "/about", name: "About Us" },
     { link: "/contact", name: "Contact Us" },
   ];
@@ -55,13 +63,48 @@ function DrawerAppBar(props) {
       </Typography>
       <Divider />
       <List>
+        {auth.isAuthenticated() ? (
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <ListItemText>
+                <Link
+                  className={classes.UserNavLink}
+                  to={`/user/${userData._id}` + auth.isAuthenticated().user._id}
+                >
+                  <Typography
+                    style={isActive(
+                      props.history,
+                      `/user/${userData._id}` + auth.isAuthenticated().user._id
+                    )}
+                  >
+                    My Profile
+                  </Typography>
+                </Link>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        ) : (
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <ListItemText>
+                <Link className={classes.UserNavLink} to={"/"}>
+                  <Typography style={isActive(props.history, "/")}>
+                    Home
+                  </Typography>
+                </Link>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText>
-                <a className={classes.UserNavLink} href={item.link}>
-                  {item.name}
-                </a>
+                <Link className={classes.UserNavLink} to={item.link}>
+                  <Typography style={isActive(props.history, `${item.link}`)}>
+                    {item.name}
+                  </Typography>
+                </Link>
               </ListItemText>
             </ListItemButton>
           </ListItem>
@@ -79,20 +122,52 @@ function DrawerAppBar(props) {
         <AppBar component="nav" backgroundColor="#000000">
           <Toolbar backgroundColor="#000000">
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              JESUS EMBASSY
+              <Link className={classes.UserNavLogo} to={"/"}>
+                JESUS EMBASSY
+              </Link>
             </Typography>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              {auth.isAuthenticated() ? (
+                <Button sx={{ color: "#fff" }}>
+                  <Link
+                    className={classes.UserNavLink}
+                    to={
+                      `/user/${userData._id}` + auth.isAuthenticated().user._id
+                    }
+                  >
+                    <Typography
+                      style={isActive(
+                        props.history,
+                        `/user/${userData._id}` +
+                          auth.isAuthenticated().user._id
+                      )}
+                    >
+                      My Profile
+                    </Typography>
+                  </Link>
+                </Button>
+              ) : (
+                <Button sx={{ color: "#fff" }}>
+                  <Link className={classes.UserNavLink} to={"/"}>
+                    <Typography style={isActive(props.history, "/")}>
+                      Home
+                    </Typography>
+                  </Link>
+                </Button>
+              )}
               {navItems.map((item) => (
                 <Button key={item} sx={{ color: "#fff" }}>
-                  <a className={classes.UserNavLink} href={item.link}>
-                    {item.name}
-                  </a>
+                  <Link className={classes.UserNavLink} to={item.link}>
+                    <Typography style={isActive(props.history, `${item.link}`)}>
+                      {item.name}
+                    </Typography>
+                  </Link>
                 </Button>
               ))}
-              <Cart/>
+              <Cart />
             </Box>
             <Box sx={{ mr: 2, display: { sm: "none" } }}>
-              <Cart/>
+              <Cart />
             </Box>
             <Box
               color="inherit"
@@ -128,9 +203,9 @@ function DrawerAppBar(props) {
       </Box>
     </ThemeProvider>
   );
-}
+});
 
-DrawerAppBar.propTypes = {
+UserNav.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -138,4 +213,4 @@ DrawerAppBar.propTypes = {
   window: PropTypes.func,
 };
 
-export default DrawerAppBar;
+export default UserNav;

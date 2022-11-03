@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
   Card,
+  Container,
+  Box,
   CardActions,
   CardContent,
   TextField,
@@ -13,6 +15,8 @@ import { read, update } from "./api-user.js";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import ErrorIcon from "@mui/icons-material/Error";
+import UserNav from "../core/UserNav/UserNav";
+import Footer from "../core/Footer/Footer";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -32,7 +36,10 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 300,
+    width: 400,
+     ["@media screen and (max-width: 540px)"]: {
+      width: "100%"
+    },
   },
   submit: {
     margin: "auto",
@@ -50,13 +57,13 @@ const theme = createTheme({
           },
           style: {
             fontWeight: "400",
-            backgroundColor: "#F1D4CA",
+            backgroundColor: "#000000",
             boxShadow: "none",
-            color: "black",
+            color: "#ffffff",
             marginTop: "35px",
             "&:hover": {
-              backgroundColor: "#000000",
-              color: "#FFFFFF",
+              backgroundColor: "#F1D4CA",
+              color: "#000000",
             },
           },
         },
@@ -130,58 +137,65 @@ export default function EditProfile({ match }) {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Card className={classes.card}>
-        <CardContent>
-          <Typography variant="h6" className={classes.title}>
-            Edit Profile
-          </Typography>
-          <TextField
-            id="name"
-            label="Name"
-            className={classes.textField}
-            value={values.name}
-            onChange={handleChange("name")}
-            margin="normal"
-          />
-          <br />
-          <TextField
-            id="email"
-            type="email"
-            label="Email"
-            className={classes.textField}
-            value={values.email}
-            onChange={handleChange("email")}
-            margin="normal"
-          />
-          <br />
-          <TextField
-            id="password"
-            type="password"
-            label="Password"
-            className={classes.textField}
-            value={values.password}
-            onChange={handleChange("password")}
-            margin="normal"
-          />
-          <br />{" "}
-          {values.error && (
-            <Typography component="p" color="error">
-              <ErrorIcon />
-              {values.error}
-            </Typography>
-          )}
-        </CardContent>
-        <CardActions>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={clickSubmit}
-            className={classes.submit}
-          >
-            Submit
-          </Button>
-        </CardActions>
-      </Card>
+      <Container maxWidth="xl">
+        <UserNav />
+        <Box display="flex" my={10} justifyContent="center" alignItems="center">
+          <Card className={classes.card}>
+            <CardContent>
+              <Typography variant="h6" className={classes.title}>
+                Edit Profile
+              </Typography>
+              <TextField
+                id="name"
+                label="Name"
+                className={classes.textField}
+                value={values.name}
+                onChange={handleChange("name")}
+                margin="normal"
+              />
+              <br />
+              <TextField
+                id="email"
+                type="email"
+                label="Email"
+                className={classes.textField}
+                value={values.email}
+                onChange={handleChange("email")}
+                margin="normal"
+              />
+              <br />
+              <TextField
+                id="password"
+                type="password"
+                label="Password"
+                className={classes.textField}
+                value={values.password}
+                onChange={handleChange("password")}
+                margin="normal"
+              />
+              <br />{" "}
+              {values.error && (
+                <Typography component="p" color="error">
+                  <ErrorIcon />
+                  {values.error}
+                </Typography>
+              )}
+            </CardContent>
+            <CardActions>
+              <Button
+                color="primary"
+                fullWidth
+                variant="contained"
+                onClick={clickSubmit}
+                className={classes.submit}
+              >
+                Submit
+              </Button>
+            </CardActions>
+          </Card>
+        </Box>
+        <Footer />
+      </Container>
     </ThemeProvider>
   );
 }

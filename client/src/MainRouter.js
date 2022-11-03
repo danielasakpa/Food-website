@@ -8,7 +8,6 @@ import Profile from "./user/Profile";
 import FoodMenu from "./core/FoodMenu/FoodMenu";
 import EditProfile from "./user/EditProfile";
 import PrivateRoute from "./auth/PrivateRoute";
-import PaystackBtn from "./core/PaystackBtn/PaystackBtn";
 
 
 const MainRouter = () => {
@@ -18,7 +17,6 @@ const MainRouter = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/users" component={Users} />
-        <Route exact path="/PaystackBtn" component={PaystackBtn} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/user/:userId" component={Profile} />
         <Route exact path="/menu" component={FoodMenu} />

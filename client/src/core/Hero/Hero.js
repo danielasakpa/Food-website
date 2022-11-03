@@ -13,6 +13,7 @@ import SignupImg from "../../Assets/images/hero.jpg";
 import Navbar from "../Navbar/Navbar";
 import { Stack } from "@mui/system";
 import NavMenu from "../NavMenu/NavMenu";
+import { Link } from "react-router-dom";
 
 const theme = createTheme({
   components: {
@@ -129,7 +130,7 @@ const Hero = () => {
                   Suspendisse varius enim in eros elementum tristique. Duis
                   cursus, mi quis viverra ornare, eros dolor interdum nulla.
                 </Typography>
-                <Button variant="contained">Discover Our Menu</Button>
+                <Link to={"/menu"} className={classes.orderBtn}><Button variant="contained">Discover Our Menu</Button></Link>
               </Box>
               <Box
                 textAlign="right"
