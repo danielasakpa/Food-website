@@ -18,7 +18,7 @@ export default makeStyles((theme) => ({
         }
       },
       "&:hover": {
-        color: "#F6F6C9",
+        // color: "#F6F6C9",
         animation:
           "$anim2 500ms cubic-bezier(0.175, 0.885, 0.32, 0.275) infinite;",
       },

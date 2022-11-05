@@ -95,7 +95,7 @@ const Profile = withRouter(({ match, history }) => {
               alignItems="center"
             >
               {auth.isAuthenticated().user &&
-                auth.isAuthenticated().user._id == user._id && (
+                auth.isAuthenticated().user._id === user._id && (
                   <>
                     <Link to={"/user/edit/" + user._id}>
                       <IconButton aria-label="Edit" color="primary">

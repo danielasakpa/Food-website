@@ -41,7 +41,7 @@ const navLinks = [
   { link: "/contact", name: "Contact" },
 ];
 
-const Navbar = ({ color, fontFamily, moblieDisplay }) => {
+const Navbar = ({ color, mb , fontFamily, moblieDisplay }) => {
   const jwt = auth.isAuthenticated();
   const classes = useStyles();
   return (
@@ -52,7 +52,7 @@ const Navbar = ({ color, fontFamily, moblieDisplay }) => {
           direction="row"
           justifyContent="start"
           alignItems="center"
-          mb={{ sm: 2, md: 10 }}
+          mb={{ sm: 2, md: mb}}
           display={{ xs: moblieDisplay, md: "block" }}
         >
           <Box fontFamily={fontFamily}>
@@ -62,6 +62,7 @@ const Navbar = ({ color, fontFamily, moblieDisplay }) => {
                   className={classes.navLinks}
                   key={items.name}
                   style={{
+                    color: color,
                     fontFamily: fontFamily,
                     fontWeight: "200",
                   }}
@@ -74,10 +75,11 @@ const Navbar = ({ color, fontFamily, moblieDisplay }) => {
             <Link
               className={classes.navLinks}
               style={{
+                color: color,
                 fontFamily: fontFamily,
                 fontWeight: "200",
               }}
-              href={jwt.token ? "/" : "/signup"}
+              to={jwt.token ? "/" : "/signup"}
             >
               <li>Order Now</li>
             </Link>

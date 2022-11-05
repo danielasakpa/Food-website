@@ -1,16 +1,15 @@
 import React from "react";
-import useStyles from "./FooterStlye.js";
 import {
   Typography,
   Box,
   Stack,
   Container,
-  Grid,
   createTheme,
   ThemeProvider,
 } from "@mui/material";
 import Navbar from "../Navbar/Navbar";
 import NorthIcon from "@mui/icons-material/North";
+import { Link, animateScroll as scroll } from "react-scroll";
 
 const theme = createTheme({
   components: {
@@ -96,28 +95,44 @@ theme.typography.body2 = {
 };
 
 const Footer = () => {
-  const classes = useStyles();
+  const scrollToTop = () => {
+    scroll.scrollToTop();
+  };
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <Container maxWidth="xl">
           <Stack
             direction={{ xs: "column", md: "row" }}
-            alignItems="flex-start"
+            alignItems="flex-end"
             justifyContent="space-between"
             mt={6}
           >
             <Box order={{ xs: 2, md: 1 }}>
               <Navbar
+                mb={0}
                 color="#000000"
                 moblieDisplay="block"
                 fontFamily="Bebas Neue"
               />
             </Box>
+            <Box order={{ xs: 2, md: 2 }}>
+              <Typography
+                variant="body1"
+                sx={{ maxWidth: 600 }}
+                fontFamily="pragmatica-extrabold"
+                mt={{ xs: 3, md: 0 }}
+              >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse varius enim in eros elementum tristique. Duis
+                cursus, mi quis viverra ornare, eros dolor interdum nulla.
+              </Typography>
+            </Box>
             <Box
-              order={{ xs: 1, md: 2 }}
+              order={{ xs: 1, md: 3 }}
               mb={{ xs: 2, md: 0 }}
-              alignSelf={{ xs: "flex-end", md: "flex-start" }}
+              alignSelf={{ xs: "flex-end", md: "flex-end" }}
               display="flex"
               flexDirection="column"
               alignItems="center"
@@ -125,18 +140,20 @@ const Footer = () => {
               <Typography variant="h6" fontFamily="Bebas Neue" mb={0.5}>
                 UP
               </Typography>
-              <Box
-                display="flex"
-                alignItems="center"
-                textAlign="center"
-                color="#fffee6"
-                backgroundColor="#000000"
-                padding="16px"
-                borderRadius="50%"
-                cursor="pointer"
-              >
-                <NorthIcon />
-              </Box>
+              <Link onClick={scrollToTop}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  textAlign="center"
+                  color="#fffee6"
+                  backgroundColor="#000000"
+                  padding="16px"
+                  borderRadius="50%"
+                  cursor="pointer"
+                >
+                  <NorthIcon cursor="pointer" />
+                </Box>
+              </Link>
               <Box mt={3}>
                 <Typography variant="body1" fontFamily="Bebas Neue">
                   Instagram
@@ -146,36 +163,6 @@ const Footer = () => {
                 </Typography>
               </Box>
             </Box>
-          </Stack>
-          <Stack
-            direction={{ xs: "column", md: "row" }}
-            justifyContent="space-between"
-            alignItems={{ xs: "flex-start", md: "center" }}
-            mt={3}
-            height={4}
-            mb={4}
-          >
-            <Box>
-              <Typography variant="body1" fontFamily="Bebas Neue">
-                +2348028595971
-              </Typography>
-              <Typography variant="body1" fontFamily="Bebas Neue">
-                jesus@embassy.com
-              </Typography>
-            </Box>
-            <Typography
-              variant="body1"
-              sx={{ maxWidth: 600 }}
-              fontFamily="pragmatica-extrabold"
-              mt={{xs: 3, md: 0}}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse varius enim in eros elementum tristique. Duis cursus,
-              mi quis viverra ornare, eros dolor interdum nulla.
-            </Typography>
-            <Typography mt={2} variant="body1" fontFamily="Bebas Neue">
-              @2022
-            </Typography>
           </Stack>
         </Container>
       </ThemeProvider>

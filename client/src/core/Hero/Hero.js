@@ -3,7 +3,6 @@ import useStyles from "./HeroStyle.js";
 import {
   Box,
   Container,
-  Grid,
   Typography,
   createTheme,
   ThemeProvider,
@@ -116,7 +115,7 @@ const Hero = () => {
           >
             <ThemeProvider theme={theme}>
               <Box marginTop={{ xs: 0, md: 2 }} className={classes.slidRight}>
-                <Navbar color="#fffee6" moblieDisplay="none" fontFamily="Averia Serif Libre"/>
+                <Navbar color="#fffee6" mb={10} moblieDisplay="none" fontFamily="Averia Serif Libre"/>
                 <Typography
                   variant="h2"
                   fontFamily={{ xs: "Averia Serif Libre", lg: "Bebas Neue" }}

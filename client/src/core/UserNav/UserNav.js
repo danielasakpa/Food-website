@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import useStyles from "./UserNavStyle";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
@@ -34,7 +34,7 @@ const theme = createTheme({
 });
 
 const isActive = (history, path) => {
-  if (history.location.pathname == path) return { color: "#ff4081" };
+  if (history.location.pathname === path) return { color: "#ff4081" };
 };
 
 const UserNav = withRouter((props) => {

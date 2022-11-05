@@ -41,7 +41,7 @@ const PaystackBtn = ({ amount }) => {
     onClose: handleClose,
   };
 
-  if (paymentStatus == "success") {
+  if (paymentStatus === "success") {
     var templateParams = {
       name: userData.name,
       email: userData.email,

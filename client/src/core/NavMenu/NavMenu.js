@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useStyles from "./NavMenuStyle";
 import { Typography, Stack, Box } from "@mui/material";
 import auth from "../../auth/auth-helper";
@@ -18,7 +18,7 @@ const navItems = [
 ];
 
 const isActive = (history, path) => {
-  if (history.location.pathname == path) return { color: "#ff4081" };
+  if (history.location.pathname === path) return { color: "#ff4081" };
 };
 
 const NavMenu = withRouter((props) => {

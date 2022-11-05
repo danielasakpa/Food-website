@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import {
   List,
   ListItem,
-  ListItemAvatar,
   ListItemText,
   Typography,
-  Avatar,
   Paper,
-  Person,
 } from "@mui/material";
 import { list } from "./api-user.js";
 import { Link } from "react-router-dom";

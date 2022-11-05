@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { productsArray, getProductData } from "./productsStore";
+import { getProductData } from "./productsStore";
 
 export const CartContext = createContext({
   items: [],
@@ -58,7 +58,7 @@ export function CartProvider({ children }) {
   function removeOneFromCart(id) {
     const quantity = getProductQuantity(id);
 
-    if (quantity == 1) {
+    if (quantity === 1) {
       deleteFromCart(id);
     } else {
       setCartProducts(
@@ -78,7 +78,7 @@ export function CartProvider({ children }) {
     // [product1, product3]
     setCartProducts(() =>
       JSON.parse(sessionStorage.getItem("cart")).filter((currentProduct) => {
-        return currentProduct.id != id;
+        return currentProduct.id !== id;
       })
     );
     count = 0;
@@ -93,7 +93,7 @@ export function CartProvider({ children }) {
     return totalCost;
   }
 
-  if (cartProducts.length != 0 || count == 0) {
+  if (cartProducts.length !== 0 || count === 0) {
     sessionStorage.setItem("cart", JSON.stringify(cartProducts));
   }
 
